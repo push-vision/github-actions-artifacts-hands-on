@@ -18,3 +18,16 @@ jobs:
       with:
         name: hello-artifact
         path: hello.txt
+        
+  download:
+    needs: build  # This ensures that the 'download' job runs after the 'build' job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download hello.txt from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: hello-artifact
+          path: ./artifacts
+
+      - name: Display the content of hello.txt
+        run: cat ./artifacts/hello.txt
